@@ -27,10 +27,15 @@ public class DownloadServiceNotification {
     }
 
     private void setupNotificationBuilders() {
+
+
+     //   PendingIntent pendingIntent = PendingIntent.getService()
+
         notificationCompatBuilder = new NotificationCompat.Builder(context, NotificationUtils.CHANNEL_ID_DOWNLOADING)
                 .setOngoing(true)
                 .setContentIntent(ClientConfig.downloadServiceCallbacks.getNotificationContentIntent(context))
                 .setSmallIcon(R.drawable.ic_notification_sync);
+       // .addAction(R.drawable.ic_cancel_black,"STOP",);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             notificationCompatBuilder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
         }

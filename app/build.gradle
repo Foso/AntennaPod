@@ -210,6 +210,8 @@ dependencies {
     androidTestImplementation "androidx.test:runner:$runnerVersion"
     androidTestImplementation "androidx.test:rules:$rulesVersion"
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
 if (project.hasProperty("antennaPodPlayPublisherCredentials")) {

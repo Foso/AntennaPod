@@ -162,6 +162,9 @@ public class DownloadService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if(intent != null &&  intent.getAction() !=null && intent.getAction().equals(DownloadService.ACTION_CANCEL_ALL_DOWNLOADS)){
+            DownloadRequester.getInstance().cancelAllDownloads(this);
+        }
         if (intent != null && intent.getParcelableArrayListExtra(EXTRA_REQUESTS) != null) {
             Notification notification = notificationManager.updateNotifications(
                     requester.getNumberOfDownloads(), downloads);

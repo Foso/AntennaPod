@@ -4,16 +4,19 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
+
 import androidx.core.app.NotificationCompat;
+
+import java.util.List;
+
 import de.danoeh.antennapod.core.ClientConfig;
 import de.danoeh.antennapod.core.R;
 import de.danoeh.antennapod.core.feed.Feed;
 import de.danoeh.antennapod.core.feed.FeedMedia;
 import de.danoeh.antennapod.core.util.gui.NotificationUtils;
-
-import java.util.List;
 
 public class DownloadServiceNotification {
     private static final String TAG = "DownloadSvcNotification";
@@ -28,14 +31,17 @@ public class DownloadServiceNotification {
 
     private void setupNotificationBuilders() {
 
+        Intent cancelIntent = new Intent(context,DownloadService.class);
+        cancelIntent.setAction(DownloadService.ACTION_CANCEL_ALL_DOWNLOADS);
+        cancelIntent.setPackage(context.getPackageName());
 
-     //   PendingIntent pendingIntent = PendingIntent.getService()
+        PendingIntent pendingIntent = PendingIntent.getService(context, 0, cancelIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         notificationCompatBuilder = new NotificationCompat.Builder(context, NotificationUtils.CHANNEL_ID_DOWNLOADING)
                 .setOngoing(true)
                 .setContentIntent(ClientConfig.downloadServiceCallbacks.getNotificationContentIntent(context))
-                .setSmallIcon(R.drawable.ic_notification_sync);
-       // .addAction(R.drawable.ic_cancel_black,"STOP",);
+                .setSmallIcon(R.drawable.ic_notification_sync)
+                .addAction(R.drawable.ic_cancel_black, "Cancel all downloads", pendingIntent);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             notificationCompatBuilder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
         }
@@ -167,12 +173,12 @@ public class DownloadServiceNotification {
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId);
             builder.setTicker(context.getString(titleId))
-                   .setContentTitle(context.getString(titleId))
-                   .setContentText(content)
-                   .setStyle(new NotificationCompat.BigTextStyle().bigText(content))
-                   .setSmallIcon(iconId)
-                   .setContentIntent(intent)
-                   .setAutoCancel(true);
+                    .setContentTitle(context.getString(titleId))
+                    .setContentText(content)
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(content))
+                    .setSmallIcon(iconId)
+                    .setContentIntent(intent)
+                    .setAutoCancel(true);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
             }

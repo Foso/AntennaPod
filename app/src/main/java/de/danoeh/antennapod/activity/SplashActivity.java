@@ -12,10 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.widget.ProgressBar;
 
 import de.danoeh.antennapod.R;
+import de.danoeh.antennapod.jensklingenberg.parabol.ui.MyActivity;
 import de.danoeh.antennapod.core.storage.PodDBAdapter;
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -45,7 +45,7 @@ public class SplashActivity extends AppCompatActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(() -> {
-                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                    Intent intent = new Intent(SplashActivity.this, MyActivity.class);
                     startActivity(intent);
                     overridePendingTransition(0, 0);
                     finish();

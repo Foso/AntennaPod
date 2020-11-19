@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.widget.ProgressBar;
 
 import de.danoeh.antennapod.R;
-import de.danoeh.antennapod.jensklingenberg.parabol.ui.MyActivity;
+import de.jensklingenberg.parabol.ui.MyActivity;
 import de.danoeh.antennapod.core.storage.PodDBAdapter;
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;

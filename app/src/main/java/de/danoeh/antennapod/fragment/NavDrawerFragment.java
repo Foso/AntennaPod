@@ -67,7 +67,8 @@ public class NavDrawerFragment extends Fragment implements AdapterView.OnItemCli
             DownloadsFragment.TAG,
             PlaybackHistoryFragment.TAG,
             AddFeedFragment.TAG,
-            NavListAdapter.SUBSCRIPTION_LIST_TAG
+            NavListAdapter.SUBSCRIPTION_LIST_TAG,
+            de.jensklingenberg.parabol.ui.MyEpisodesFragment.TAG
     };
 
     private DBReader.NavDrawerData navDrawerData;

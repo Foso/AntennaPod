@@ -55,6 +55,8 @@ import de.danoeh.antennapod.fragment.SubscriptionFragment;
 import de.danoeh.antennapod.fragment.TransitionEffect;
 import de.danoeh.antennapod.preferences.PreferenceUpgrader;
 import de.danoeh.antennapod.view.LockableBottomSheetBehavior;
+import de.jensklingenberg.parabol.ui.MyEpisodesFragment;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.Validate;
 import org.greenrobot.eventbus.EventBus;
@@ -250,6 +252,10 @@ public class MainActivity extends CastEnabledActivity {
                 break;
             case EpisodesFragment.TAG:
                 fragment = new EpisodesFragment();
+                break;
+
+            case MyEpisodesFragment.TAG:
+                fragment = new MyEpisodesFragment();
                 break;
             case DownloadsFragment.TAG:
                 fragment = new DownloadsFragment();

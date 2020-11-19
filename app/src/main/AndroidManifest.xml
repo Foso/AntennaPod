@@ -79,7 +79,7 @@
         </activity>
 
         <activity
-            android:name="de.danoeh.antennapod.jensklingenberg.parabol.ui.MyActivity"
+            android:name="de.jensklingenberg.parabol.ui.MyActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout|density|uiMode|keyboard|navigation"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:launchMode="singleTask"

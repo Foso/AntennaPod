@@ -1,4 +1,4 @@
-package de.danoeh.antennapod.jensklingenberg.parabol.ui
+package de.jensklingenberg.parabol.ui
 
 import de.danoeh.antennapod.activity.MainActivity
 

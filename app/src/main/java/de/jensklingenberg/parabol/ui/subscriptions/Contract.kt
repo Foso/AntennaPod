@@ -11,6 +11,8 @@ interface Contract {
     interface Presenter {
         fun onInit()
         fun shutdown()
+        fun performSearch(query: String, selectedFeed: Long = 0)
+
     }
 
     interface View : NavigatorView<Destination> {

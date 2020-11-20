@@ -1,10 +1,10 @@
-package de.jensklingenberg.parabol.ui
+package de.jensklingenberg.parabol.ui.episodes
 
 import de.danoeh.antennapod.core.feed.FeedItem
 import de.jensklingenberg.parabol.ui.common.BaseDataSourceItem
 
 
-class FeedSourceItem(
+class FeedItemSourceItem(
         feedItem: FeedItem, var onEntryClickListener: FeedItemViewHolder.OnEntryClickListener? = null
 ) :
         BaseDataSourceItem<FeedItem>(FeedItemViewHolder::class.java) {

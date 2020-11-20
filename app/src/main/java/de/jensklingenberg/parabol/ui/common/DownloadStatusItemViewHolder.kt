@@ -1,14 +1,10 @@
-package de.jensklingenberg.parabol.ui
+package de.jensklingenberg.parabol.ui.common
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import de.danoeh.antennapod.R
 import de.danoeh.antennapod.core.service.download.DownloadStatus
-
-
-import de.jensklingenberg.parabol.ui.common.BaseViewHolder
 
 
 class DownloadStatusItemViewHolder(val viewParent: ViewGroup) :

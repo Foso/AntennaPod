@@ -12,11 +12,18 @@ interface FeedDataSource{
      * @param limit The maximum number of episodes that should be loaded.
      */
     fun getRecentlyPublishedEpisodes(offset:Int,limit:Int): List<FeedItem>
-}
+
+    fun getFeedList() :  List<Feed>
+
+    }
 
 class FeedRepository :FeedDataSource{
     override fun getRecentlyPublishedEpisodes(offset: Int, limit: Int): List<FeedItem> {
        return DBReader.getRecentlyPublishedEpisodes(0, limit)
+    }
+
+    override fun getFeedList(): List<Feed> {
+        return DBReader.getFeedList()
     }
 
 }

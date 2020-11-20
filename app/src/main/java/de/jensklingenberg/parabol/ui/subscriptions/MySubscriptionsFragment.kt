@@ -1,4 +1,5 @@
-package de.jensklingenberg.parabol.ui
+package de.jensklingenberg.parabol.ui.subscriptions
+
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,27 +9,19 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.danoeh.antennapod.R
-import de.danoeh.antennapod.databinding.JkFragmentEpisodesBinding
+import de.danoeh.antennapod.activity.MainActivity
+import de.danoeh.antennapod.databinding.JkFragmentSubscriptionsBinding
+import de.danoeh.antennapod.fragment.FeedItemlistFragment
 import de.jensklingenberg.parabol.ui.common.BaseAdapter
-
-
 import de.jensklingenberg.parabol.ui.common.BaseDataSourceItem
 
-class MyEpisodesFragment : Fragment(), Contract.View {
+class MySubscriptionsFragment : Fragment(), Contract.View {
 
-    val presenter: Contract.Presenter by lazy { MyPresenter(this) }
+    val presenter: Contract.Presenter by lazy { SubscriptionsPresenter(this) }
     private val baseAdapter = BaseAdapter()
+    lateinit var binding: JkFragmentSubscriptionsBinding
 
-    private var _binding: JkFragmentEpisodesBinding? = null
 
-    // This property is only valid between onCreateView and
-// onDestroyView.
-    private val binding get() = _binding!!
-
-    companion object {
-
-        const val TAG = "MyEpisodesFragment"
-    }
 
 
     override fun onCreateView(
@@ -36,20 +29,16 @@ class MyEpisodesFragment : Fragment(), Contract.View {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        _binding = JkFragmentEpisodesBinding.inflate(inflater, container, false)
+        binding = JkFragmentSubscriptionsBinding.inflate(inflater, container, false)
         return binding.root
     }
-
-
-
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val toolbar: androidx.appcompat.widget.Toolbar = view.findViewById(R.id.toolbar)
         toolbar.setTitle(R.string.playback_history_label)
-        //toolbar.setOnMenuItemClickListener(this)
+
 
         setupRecyclerView()
         presenter.onInit()
@@ -76,8 +65,19 @@ class MyEpisodesFragment : Fragment(), Contract.View {
         baseAdapter.dataSource.setItems(list)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun navigateTo(destination: Contract.Destination) {
+        when (destination) {
+            is Contract.Destination.FeedItemlist -> {
+                val fragment: Fragment = FeedItemlistFragment.newInstance(destination.feedId)
+                (requireActivity() as MainActivity).loadChildFragment(fragment)
+            }
+        }
+
+    }
+
+
+    companion object {
+
+        const val TAG = "SubscriptionsFragment"
     }
 }

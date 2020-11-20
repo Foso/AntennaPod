@@ -1,4 +1,4 @@
-package de.jensklingenberg.parabol.ui
+package de.jensklingenberg.parabol.ui.episodes
 
 import de.jensklingenberg.parabol.data.FeedRepository
 import de.jensklingenberg.parabol.ui.common.BaseDataSourceItem
@@ -15,7 +15,7 @@ interface Contract {
     }
 }
 
-class MyPresenter(val view: Contract.View) : Contract.Presenter {
+class MyEpisodesPresenter(val view: Contract.View) : Contract.Presenter {
     val feedDataSource = FeedRepository()
 
     protected val EPISODES_PER_PAGE = 150
@@ -25,7 +25,7 @@ class MyPresenter(val view: Contract.View) : Contract.Presenter {
     override fun onInit() {
 
         view.setData(feedDataSource.getRecentlyPublishedEpisodes(0, page * EPISODES_PER_PAGE).map {
-            FeedSourceItem(it)
+            FeedItemSourceItem(it)
         })
     }
 

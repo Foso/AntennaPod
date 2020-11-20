@@ -204,6 +204,7 @@
         <item>@string/add_feed_label</item>
         <item>@string/subscriptions_list_label</item>
         <item>@string/episodes_label</item>
+        <item>@string/subscriptions_label</item>
 
     </string-array>
 

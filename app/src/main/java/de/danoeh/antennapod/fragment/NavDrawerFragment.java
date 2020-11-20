@@ -41,6 +41,8 @@ import de.danoeh.antennapod.core.util.FeedItemUtil;
 import de.danoeh.antennapod.core.util.IntentUtils;
 import de.danoeh.antennapod.dialog.SubscriptionsFilterDialog;
 import de.danoeh.antennapod.dialog.RenameFeedDialog;
+import de.jensklingenberg.parabol.ui.episodes.MyEpisodesFragment;
+import de.jensklingenberg.parabol.ui.subscriptions.MySubscriptionsFragment;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -68,7 +70,8 @@ public class NavDrawerFragment extends Fragment implements AdapterView.OnItemCli
             PlaybackHistoryFragment.TAG,
             AddFeedFragment.TAG,
             NavListAdapter.SUBSCRIPTION_LIST_TAG,
-            de.jensklingenberg.parabol.ui.MyEpisodesFragment.TAG
+            MyEpisodesFragment.TAG,
+            MySubscriptionsFragment.TAG
     };
 
     private DBReader.NavDrawerData navDrawerData;

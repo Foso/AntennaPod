@@ -55,7 +55,8 @@ import de.danoeh.antennapod.fragment.SubscriptionFragment;
 import de.danoeh.antennapod.fragment.TransitionEffect;
 import de.danoeh.antennapod.preferences.PreferenceUpgrader;
 import de.danoeh.antennapod.view.LockableBottomSheetBehavior;
-import de.jensklingenberg.parabol.ui.MyEpisodesFragment;
+import de.jensklingenberg.parabol.ui.episodes.MyEpisodesFragment;
+import de.jensklingenberg.parabol.ui.subscriptions.MySubscriptionsFragment;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.Validate;
@@ -256,6 +257,9 @@ public class MainActivity extends CastEnabledActivity {
 
             case MyEpisodesFragment.TAG:
                 fragment = new MyEpisodesFragment();
+                break;
+            case MySubscriptionsFragment.TAG:
+                fragment = new MySubscriptionsFragment();
                 break;
             case DownloadsFragment.TAG:
                 fragment = new DownloadsFragment();

@@ -1,8 +1,6 @@
-package de.jensklingenberg.parabol.ui
+package de.jensklingenberg.parabol.ui.common
 
 import de.danoeh.antennapod.core.service.download.DownloadStatus
-
-import de.jensklingenberg.parabol.ui.common.BaseDataSourceItem
 
 
 class DownloadStatusSourceItem(

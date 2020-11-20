@@ -18,6 +18,8 @@ import de.danoeh.antennapod.asynctask.OpmlImportWorker;
 import de.danoeh.antennapod.core.export.opml.OpmlElement;
 import de.danoeh.antennapod.core.preferences.UserPreferences;
 import de.danoeh.antennapod.core.util.LangUtils;
+import de.jensklingenberg.parabol.ui.MyActivity;
+
 import org.apache.commons.io.ByteOrderMark;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.BOMInputStream;
@@ -74,7 +76,7 @@ public class OpmlImportActivity extends AppCompatActivity {
                     @Override
                     protected void onPostExecute(Void result) {
                         super.onPostExecute(result);
-                        Intent intent = new Intent(OpmlImportActivity.this, MainActivity.class);
+                        Intent intent = new Intent(OpmlImportActivity.this, MyActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                                 | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);

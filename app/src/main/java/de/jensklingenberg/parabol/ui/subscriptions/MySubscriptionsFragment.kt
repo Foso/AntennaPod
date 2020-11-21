@@ -14,6 +14,7 @@ import de.danoeh.antennapod.R
 import de.danoeh.antennapod.activity.MainActivity
 import de.danoeh.antennapod.databinding.JkFragmentSubscriptionsBinding
 import de.danoeh.antennapod.fragment.FeedItemlistFragment
+import de.danoeh.antennapod.menuhandler.MenuItemUtils
 import de.jensklingenberg.parabol.ui.common.BaseAdapter
 import de.jensklingenberg.parabol.ui.common.BaseDataSourceItem
 
@@ -38,7 +39,7 @@ class MySubscriptionsFragment : Fragment(), Contract.View {
         val toolbar: Toolbar = view.findViewById(R.id.toolbar)
         toolbar.setTitle(R.string.subscriptions_label)
         toolbar.inflateMenu(R.menu.episodes)
-        de.danoeh.antennapod.menuhandler.MenuItemUtils.setupSearchItem(toolbar.menu, activity as MainActivity?, 0, "")
+        MenuItemUtils.setupSearchItem(toolbar.menu, activity as MainActivity?, 0, "")
         setupSearch(toolbar)
 
         setupRecyclerView()
@@ -69,8 +70,8 @@ class MySubscriptionsFragment : Fragment(), Contract.View {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        menu?.clear()
-        inflater?.inflate(R.menu.episodes, menu)
+       // menu?.clear()
+       // inflater?.inflate(R.menu.episodes, menu)
 
     }
 

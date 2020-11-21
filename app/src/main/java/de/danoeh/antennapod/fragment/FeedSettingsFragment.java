@@ -102,6 +102,8 @@ public class FeedSettingsFragment extends Fragment {
         private static final CharSequence PREF_SCREEN = "feedSettingsScreen";
         private static final CharSequence PREF_AUTHENTICATION = "authentication";
         private static final CharSequence PREF_AUTO_DELETE = "autoDelete";
+        private static final CharSequence PREF_FAVORITE = "favorite";
+
         private static final CharSequence PREF_CATEGORY_AUTO_DOWNLOAD = "autoDownloadCategory";
         private static final String PREF_FEED_PLAYBACK_SPEED = "feedPlaybackSpeed";
         private static final String PREF_AUTO_SKIP = "feedAutoSkip";
@@ -153,6 +155,7 @@ public class FeedSettingsFragment extends Fragment {
                         setupAutoDownloadGlobalPreference();
                         setupAutoDownloadPreference();
                         setupKeepUpdatedPreference();
+                        setupFavorite();
                         setupAutoDeletePreference();
                         setupVolumeReductionPreferences();
                         setupAuthentificationPreference();
@@ -347,6 +350,19 @@ public class FeedSettingsFragment extends Fragment {
             pref.setOnPreferenceChangeListener((preference, newValue) -> {
                 boolean checked = newValue == Boolean.TRUE;
                 feedPreferences.setKeepUpdated(checked);
+                feed.savePreferences();
+                pref.setChecked(checked);
+                return false;
+            });
+        }
+
+        private void setupFavorite() {
+            SwitchPreferenceCompat pref = findPreference(PREF_FAVORITE);
+
+            pref.setChecked(feedPreferences.isFavorite());
+            pref.setOnPreferenceChangeListener((preference, newValue) -> {
+                boolean checked = newValue == Boolean.TRUE;
+                feedPreferences.setFavorite(checked);
                 feed.savePreferences();
                 pref.setChecked(checked);
                 return false;

@@ -8,6 +8,11 @@
             android:icon="?attr/navigation_refresh"
             android:title="@string/keep_updated"
             android:summary="@string/keep_updated_summary"/>
+    <SwitchPreferenceCompat
+        android:key="favorite"
+        android:icon="?attr/navigation_refresh"
+        android:title="@string/keep_updated"
+        android:summary="@string/keep_updated_summary"/>
 
     <Preference
             android:key="authentication"

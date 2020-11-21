@@ -21,6 +21,7 @@ public class FeedPreferences {
     private long feedID;
     private boolean autoDownload;
     private boolean keepUpdated;
+    private boolean favorite;
 
     public enum AutoDeleteAction {
         GLOBAL,
@@ -39,10 +40,10 @@ public class FeedPreferences {
 
     public FeedPreferences(long feedID, boolean autoDownload, AutoDeleteAction auto_delete_action, VolumeAdaptionSetting volumeAdaptionSetting, String username, String password) {
         this(feedID, autoDownload, true, auto_delete_action, volumeAdaptionSetting,
-                username, password, new FeedFilter(), SPEED_USE_GLOBAL, 0, 0);
+                username, password, new FeedFilter(), SPEED_USE_GLOBAL, 0, 0,false);
     }
 
-    private FeedPreferences(long feedID, boolean autoDownload, boolean keepUpdated, AutoDeleteAction auto_delete_action, VolumeAdaptionSetting volumeAdaptionSetting, String username, String password, @NonNull FeedFilter filter, float feedPlaybackSpeed, int feedSkipIntro, int feedSkipEnding) {
+    private FeedPreferences(long feedID, boolean autoDownload, boolean keepUpdated, AutoDeleteAction auto_delete_action, VolumeAdaptionSetting volumeAdaptionSetting, String username, String password, @NonNull FeedFilter filter, float feedPlaybackSpeed, int feedSkipIntro, int feedSkipEnding,boolean favorite) {
         this.feedID = feedID;
         this.autoDownload = autoDownload;
         this.keepUpdated = keepUpdated;
@@ -54,12 +55,15 @@ public class FeedPreferences {
         this.feedPlaybackSpeed = feedPlaybackSpeed;
         this.feedSkipIntro = feedSkipIntro;
         this.feedSkipEnding = feedSkipEnding;
+        this.favorite=favorite;
     }
 
     public static FeedPreferences fromCursor(Cursor cursor) {
         int indexId = cursor.getColumnIndex(PodDBAdapter.KEY_ID);
         int indexAutoDownload = cursor.getColumnIndex(PodDBAdapter.KEY_AUTO_DOWNLOAD);
         int indexAutoRefresh = cursor.getColumnIndex(PodDBAdapter.KEY_KEEP_UPDATED);
+        int indexFavorite = cursor.getColumnIndex(PodDBAdapter.KEY_FAVORITE);
+
         int indexAutoDeleteAction = cursor.getColumnIndex(PodDBAdapter.KEY_AUTO_DELETE_ACTION);
         int indexVolumeAdaption = cursor.getColumnIndex(PodDBAdapter.KEY_FEED_VOLUME_ADAPTION);
         int indexUsername = cursor.getColumnIndex(PodDBAdapter.KEY_USERNAME);
@@ -73,6 +77,8 @@ public class FeedPreferences {
         long feedId = cursor.getLong(indexId);
         boolean autoDownload = cursor.getInt(indexAutoDownload) > 0;
         boolean autoRefresh = cursor.getInt(indexAutoRefresh) > 0;
+        boolean isFavorite = cursor.getInt(indexFavorite)>0;
+
         int autoDeleteActionIndex = cursor.getInt(indexAutoDeleteAction);
         AutoDeleteAction autoDeleteAction = AutoDeleteAction.values()[autoDeleteActionIndex];
         int volumeAdaptionValue = cursor.getInt(indexVolumeAdaption);
@@ -94,7 +100,8 @@ public class FeedPreferences {
                 new FeedFilter(includeFilter, excludeFilter),
                 feedPlaybackSpeed,
                 feedAutoSkipIntro,
-                feedAutoSkipEnding
+                feedAutoSkipEnding,
+                isFavorite
                 );
     }
 
@@ -117,8 +124,16 @@ public class FeedPreferences {
         return keepUpdated;
     }
 
+    public boolean isFavorite() {
+        return favorite;
+    }
+
     public void setKeepUpdated(boolean keepUpdated) {
         this.keepUpdated = keepUpdated;
+    }
+
+    public void setFavorite(boolean keepUpdated) {
+        this.favorite = keepUpdated;
     }
 
     /**

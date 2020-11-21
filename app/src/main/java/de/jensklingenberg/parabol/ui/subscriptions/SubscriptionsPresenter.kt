@@ -26,7 +26,7 @@ class SubscriptionsPresenter(val view: Contract.View) : Contract.Presenter, Subs
     }
 
     override fun performSearch(query: String, selectedFeed: Long) {
-        val list = feedDataSource.getFeedList().filter { it.title.contains(query,true) }.map {
+        val list = feedDataSource.getFeedList().filter { it.preferences.isFavorite }.filter { it.title.contains(query,true) }.map {
             SubscriptionSourceItem(it,onEntryClickListener = this)
         }
         Log.d("XXX","LIst"+list.size.toString())

@@ -19,17 +19,17 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import org.apache.commons.lang3.ArrayUtils;
+import java.util.ArrayList;
 import de.danoeh.antennapod.core.R;
+import de.danoeh.antennapod.core.feed.util.ImageResourceUtils;
 import de.danoeh.antennapod.core.glide.ApGlideSettings;
 import de.danoeh.antennapod.core.preferences.UserPreferences;
 import de.danoeh.antennapod.core.receiver.MediaButtonReceiver;
 import de.danoeh.antennapod.core.util.Converter;
-import de.danoeh.antennapod.core.feed.util.ImageResourceUtils;
 import de.danoeh.antennapod.core.util.TimeSpeedConverter;
 import de.danoeh.antennapod.core.util.gui.NotificationUtils;
 import de.danoeh.antennapod.core.util.playback.Playable;
-import java.util.ArrayList;
-import org.apache.commons.lang3.ArrayUtils;
 
 public class PlaybackServiceNotificationBuilder {
     private static final String TAG = "PlaybackSrvNotification";
@@ -196,8 +196,16 @@ public class PlaybackServiceNotificationBuilder {
         // ff follows play, then we have skip (if it's present)
         PendingIntent ffButtonPendingIntent = getPendingIntentForMediaAction(
                 KeyEvent.KEYCODE_MEDIA_FAST_FORWARD, numActions);
+
+        Intent skipChapterIntent = new Intent(context, PlaybackService.class);
+        skipChapterIntent.setAction(PlaybackService.ACTION_SKIP_CURRENT_EPISODE);
+        skipChapterIntent.setPackage(context.getPackageName());
+        PendingIntent skipIntent = PendingIntent.getService(context, 0, skipChapterIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         notification.addAction(R.drawable.ic_notification_fast_forward, context.getString(R.string.fast_forward_label),
                 ffButtonPendingIntent);
+        notification.addAction(R.drawable.ic_notification_cast_off, context.getString(R.string.fast_forward_label),
+                skipIntent);
         if (UserPreferences.showFastForwardOnCompactNotification()) {
             compactActionList.add(numActions);
         }

@@ -63,9 +63,9 @@ import java.util.List;
 public class AudioPlayerFragment extends Fragment implements
         SeekBar.OnSeekBarChangeListener, Toolbar.OnMenuItemClickListener {
     public static final String TAG = "AudioPlayerFragment";
-    private static final int POS_COVER = 0;
-    private static final int POS_DESCR = 1;
-    private static final int POS_CHAPTERS = 2;
+    private static final int POS_COVER = 2;
+    private static final int POS_DESCR = 0;
+    private static final int POS_CHAPTERS = 1;
     private static final int NUM_CONTENT_FRAGMENTS = 3;
     private static final String PREFS = "AudioPlayerFragmentPreferences";
     private static final String PREF_SHOW_TIME_LEFT = "showTimeLeft";

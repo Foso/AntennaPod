@@ -21,13 +21,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Vibrator;
-import androidx.preference.PreferenceManager;
-import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import android.support.v4.media.MediaBrowserCompat;
-import androidx.media.MediaBrowserServiceCompat;
 import android.support.v4.media.MediaDescriptionCompat;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaSessionCompat;
@@ -40,9 +34,20 @@ import android.view.SurfaceHolder;
 import android.webkit.URLUtil;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.media.MediaBrowserServiceCompat;
+import androidx.preference.PreferenceManager;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -51,7 +56,6 @@ import java.util.concurrent.TimeUnit;
 
 import de.danoeh.antennapod.core.ClientConfig;
 import de.danoeh.antennapod.core.R;
-import de.danoeh.antennapod.core.event.FeedItemEvent;
 import de.danoeh.antennapod.core.event.MessageEvent;
 import de.danoeh.antennapod.core.event.PlaybackPositionEvent;
 import de.danoeh.antennapod.core.event.ServiceEvent;
@@ -64,6 +68,7 @@ import de.danoeh.antennapod.core.feed.FeedItem;
 import de.danoeh.antennapod.core.feed.FeedMedia;
 import de.danoeh.antennapod.core.feed.FeedPreferences;
 import de.danoeh.antennapod.core.feed.MediaType;
+import de.danoeh.antennapod.core.feed.util.ImageResourceUtils;
 import de.danoeh.antennapod.core.glide.ApGlideSettings;
 import de.danoeh.antennapod.core.preferences.PlaybackPreferences;
 import de.danoeh.antennapod.core.preferences.SleepTimerPreferences;
@@ -74,21 +79,18 @@ import de.danoeh.antennapod.core.storage.DBReader;
 import de.danoeh.antennapod.core.storage.DBTasks;
 import de.danoeh.antennapod.core.storage.DBWriter;
 import de.danoeh.antennapod.core.storage.FeedSearcher;
-import de.danoeh.antennapod.core.feed.util.ImageResourceUtils;
 import de.danoeh.antennapod.core.util.IntentUtils;
 import de.danoeh.antennapod.core.util.NetworkUtils;
 import de.danoeh.antennapod.core.util.gui.NotificationUtils;
 import de.danoeh.antennapod.core.util.playback.ExternalMedia;
 import de.danoeh.antennapod.core.util.playback.Playable;
 import de.danoeh.antennapod.core.util.playback.PlaybackServiceStarter;
+import de.danoeh.jensklingenberg.util.ChapterUtilKt;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import static de.danoeh.antennapod.core.feed.FeedPreferences.SPEED_USE_GLOBAL;
 
@@ -130,6 +132,7 @@ public class PlaybackService extends MediaBrowserServiceCompat {
     public static final String ACTION_PLAYER_NOTIFICATION = "action.de.danoeh.antennapod.core.service.playerNotification";
     public static final String EXTRA_NOTIFICATION_CODE = "extra.de.danoeh.antennapod.core.service.notificationCode";
     public static final String EXTRA_NOTIFICATION_TYPE = "extra.de.danoeh.antennapod.core.service.notificationType";
+    public static final String EXTRA_SKIPCHAPTER = "action.de.danoeh.antennapod.core.service.skipCurrentEpisode";
 
     /**
      * If the PlaybackService receives this action, it will stop playback and
@@ -451,6 +454,16 @@ public class PlaybackService extends MediaBrowserServiceCompat {
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
         Log.d(TAG, "OnStartCommand called");
+
+        if(intent != null &&  intent.getAction() !=null && intent.getAction().equals(PlaybackService.EXTRA_SKIPCHAPTER)){
+
+            Integer pparse = ChapterUtilKt.pparse(getPlayable().getChapters(), mediaPlayer.getPosition());
+            if(pparse!=null){
+                mediaPlayer.seekTo(pparse);
+           }
+
+            return Service.START_NOT_STICKY;
+        }
 
         stateManager.startForeground(R.id.notification_playing, notificationBuilder.build());
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);

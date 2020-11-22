@@ -78,7 +78,7 @@ public class NSMedia extends Namespace {
                 try {
                     size = Long.parseLong(sizeStr);
                 } catch (NumberFormatException e) {
-                    Log.e(TAG, "Size \"" + sizeStr + "\" could not be parsed.");
+                    Log.e(TAG, "URL: "+url+" Size \"" + sizeStr + "\" could not be parsed.");
                 }
 
                 int durationMs = 0;
